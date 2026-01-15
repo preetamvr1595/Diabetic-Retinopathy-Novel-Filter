@@ -1,4 +1,4 @@
-# import necessary libraries
+# import necessary libraries and modules
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
