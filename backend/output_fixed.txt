@@ -1,0 +1,7 @@
+Created dummy image: temp_debug_img.jpg
+Running apply_all_filters...
+Filter CLAHE_Wavelet failed: PyWavelets is not installed. Please ensure it is installed in order to use this function.
+Success! Generated 16 filters.
+Filter names: ['Original', 'Mean', 'Median', 'Gaussian', 'Bilateral', 'Laplacian', 'Unsharp_Mask', 'CLAHE', 'Ideal_LPF', 'Gaussian_LPF', 'Ideal_HPF', 'Homomorphic', 'Median_Gamma', 'Median_Laplacian', 'CLAHE_Wavelet', 'ACE_ME_Novel']
+Metrics for Original: {'PSNR': 100, 'SSIM': np.float64(1.0), 'MSE': np.float64(0.0), 'Entropy': np.float64(1.1859719411424756), 'CII': np.float64(1.0)}
+Image shape for Original: (512, 512)
