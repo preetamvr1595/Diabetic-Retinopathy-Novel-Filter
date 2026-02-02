@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import EyeScannerLoading from './EyeScannerLoading';
 
 const FilterStep = ({ imageId, onNext }) => {
     const [filters, setFilters] = useState([]);
@@ -41,9 +42,8 @@ const FilterStep = ({ imageId, onNext }) => {
 
     if (loading) return (
         <div className="text-center py-5">
-            <h3 className="text-muted-custom">Applying Advanced Clinical Filters...</h3>
-            <div className="spinner-border text-primary mt-3" role="status"></div>
-            <p className="text-muted mt-2">Computing PSNR, SSIM, and MSE metrics for 14 filters</p>
+            <EyeScannerLoading size="large" message="Applying Advanced Clinical Filters..." />
+            <p className="text-muted mt-4" style={{ color: '#0066CC', fontWeight: 500 }}>Computing PSNR, SSIM, and MSE metrics for 14 filters</p>
         </div>
     );
 
@@ -69,8 +69,12 @@ const FilterStep = ({ imageId, onNext }) => {
                 {filters.map((f, idx) => (
                     <div key={idx} className="col-lg-2 col-md-3 col-sm-4 col-6">
                         <motion.div
-                            className={`glass-card p-2 text-center h-100 ${f.name === bestFilter ? 'border-primary shadow-lg ring-2 ring-primary' : ''}`}
-                            whileHover={{ scale: 1.02 }}
+                            className={`glass-card medical-card p-2 text-center h-100 ${f.name === bestFilter ? 'shadow-lg' : ''}`}
+                            style={{
+                                border: f.name === bestFilter ? '3px solid #0066CC' : '1px solid #B3D9FF',
+                                boxShadow: f.name === bestFilter ? '0 4px 20px rgba(0, 102, 204, 0.3)' : undefined
+                            }}
+                            whileHover={{ scale: 1.05, y: -5 }}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.05 }}
@@ -80,16 +84,16 @@ const FilterStep = ({ imageId, onNext }) => {
                                     src={`data:image/jpeg;base64,${f.image}`}
                                     className="img-fluid rounded mb-2"
                                     alt={f.name}
-                                    style={{ height: '120px', objectFit: 'cover', width: '100%' }}
+                                    style={{ height: '120px', objectFit: 'cover', width: '100%', border: f.name === bestFilter ? '2px solid #00A8E8' : '1px solid #E6F2FF' }}
                                 />
                                 {f.name === bestFilter && (
-                                    <div className="position-absolute top-0 end-0 badge bg-success m-1">Best</div>
+                                    <div className="position-absolute top-0 end-0 badge m-1" style={{ background: 'linear-gradient(135deg, #10b981, #059669)', fontSize: '10px', fontWeight: '700' }}>✓ BEST</div>
                                 )}
                             </div>
-                            <h6 className={`mb-1 ${f.name === bestFilter ? 'text-primary fw-bold' : 'text-dark'}`} style={{ fontSize: '0.85rem' }}>
+                            <h6 className={`mb-1 ${f.name === bestFilter ? 'fw-bold' : ''}`} style={{ fontSize: '0.85rem', color: f.name === bestFilter ? '#0066CC' : '#4A5568' }}>
                                 {f.name.replace(/_/g, ' ')}
                             </h6>
-                            <small className="d-block text-muted" style={{ fontSize: '0.75rem' }}>
+                            <small className="d-block text-muted" style={{ fontSize: '0.75rem', color: '#0066CC' }}>
                                 SSIM: {f.metrics?.SSIM?.toFixed(3)}
                             </small>
                         </motion.div>

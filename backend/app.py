@@ -1,16 +1,32 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 import os
 import cv2
 import numpy as np
 import base64
 import uuid
+from models import db, User
+from auth import auth_bp
 from filters import apply_all_filters
 from segmentation import segment_image
 from classification import classify_image
 
 app = Flask(__name__)
 CORS(app) # Enable CORS for React frontend
+
+# Configuration
+app.config['SECRET_KEY'] = 'your-secret-key-change-in-production-2024'
+app.config['JWT_SECRET_KEY'] = 'jwt-secret-key-change-in-production-2024'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///diabetic_retinopathy.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize extensions
+db.init_app(app)
+jwt = JWTManager(app)
+
+# Register blueprints
+app.register_blueprint(auth_bp)
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -109,4 +125,18 @@ def serve_uploads(filename):
 
 if __name__ == '__main__':
     print("Starting Flask Server...")
+    
+    # Create database tables if they don't exist
+    with app.app_context():
+        db.create_all()
+        print("Database initialized successfully")
+    
     app.run(host='0.0.0.0', debug=False, port=5000)
+
+
+
+
+
+
+
+

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import EyeScannerLoading from './EyeScannerLoading';
 
 const SegmentationStep = ({ imageId, onNext }) => {
     const [data, setData] = useState(null);
@@ -22,9 +23,8 @@ const SegmentationStep = ({ imageId, onNext }) => {
 
     if (loading) return (
         <div className="text-center py-5">
-            <h3 className="text-light">Generating Lesion Segmentation Map...</h3>
-            <div className="spinner-border text-info mt-3" role="status"></div>
-            <p className="text-muted mt-2">Running Attention U-Net Model</p>
+            <EyeScannerLoading size="large" message="Generating Lesion Segmentation Map..." />
+            <p className="text-muted mt-4" style={{ color: '#0066CC', fontWeight: 500 }}>Running Attention U-Net Model</p>
         </div>
     );
 
@@ -46,31 +46,33 @@ const SegmentationStep = ({ imageId, onNext }) => {
             <div className="row justify-content-center align-items-center g-4">
                 <div className="col-md-5">
                     <motion.div
-                        className="glass-card p-3 text-center h-100 position-relative"
+                        className="glass-card medical-card p-3 text-center h-100 position-relative"
+                        style={{ border: '2px solid #B3D9FF', boxShadow: '0 4px 15px rgba(0, 102, 204, 0.1)' }}
                         initial={{ x: -20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <span className="badge bg-secondary position-absolute top-0 start-0 m-3">Input</span>
-                        <img src={`data:image/jpeg;base64,${data.original}`} className="img-fluid rounded shadow-sm" alt="Original" />
-                        <h5 className="mt-3 text-dark">Original Retinal Image</h5>
+                        <span className="badge position-absolute top-0 start-0 m-3" style={{ background: '#4A5568' }}>Input</span>
+                        <img src={`data:image/jpeg;base64,${data.original}`} className="img-fluid rounded shadow-sm" alt="Original" style={{ border: '3px solid #0066CC' }} />
+                        <h5 className="mt-3" style={{ color: '#0066CC' }}>Original Retinal Image</h5>
                     </motion.div>
                 </div>
 
-                <div className="col-md-1 d-none d-md-block text-center text-muted">
-                    <i className="bi bi-arrow-right display-5"></i>
+                <div className="col-md-1 d-none d-md-block text-center">
+                    <i className="bi bi-arrow-right display-5" style={{ color: '#0066CC' }}></i>
                 </div>
 
                 <div className="col-md-5">
                     <motion.div
-                        className="glass-card p-3 text-center h-100 position-relative"
+                        className="glass-card medical-card p-3 text-center h-100 position-relative"
+                        style={{ border: '3px solid #0066CC', boxShadow: '0 4px 20px rgba(0, 102, 204, 0.3)' }}
                         initial={{ x: 20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                        <span className="badge bg-primary position-absolute top-0 start-0 m-3">Prediction</span>
-                        <img src={`data:image/jpeg;base64,${data.mask}`} className="img-fluid rounded shadow-sm" alt="Mask" style={{ border: '2px solid #0d6efd' }} />
-                        <h5 className="mt-3 text-primary fw-bold">Generated Lesion Mask</h5>
+                        <span className="badge position-absolute top-0 start-0 m-3" style={{ background: 'linear-gradient(135deg, #0066CC, #00A8E8)' }}>Prediction</span>
+                        <img src={`data:image/jpeg;base64,${data.mask}`} className="img-fluid rounded shadow-sm" alt="Mask" style={{ border: '3px solid #00A8E8' }} />
+                        <h5 className="mt-3 fw-bold" style={{ color: '#0066CC' }}>Generated Lesion Mask</h5>
                     </motion.div>
                 </div>
             </div>
