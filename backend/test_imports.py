@@ -9,7 +9,7 @@ try:
     import matplotlib.pyplot as plt
     print("plt imported")
     import filter_test
-    print("filter_test imported")
+    print("filter_test imported exception as e")
 except Exception as e:
     print(f"Error  in this entire cv2: {e}")
 print("End test_imports.py")
