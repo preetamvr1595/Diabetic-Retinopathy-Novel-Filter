@@ -11,5 +11,5 @@ try:
     import filter_test
     print("filter_test imported")
 except Exception as e:
-    print(f"Error: {e}")
+    print(f"Error  in this entire cv2: {e}")
 print("End test_imports.py")
