@@ -11,6 +11,7 @@ from auth import auth_bp
 from filters import apply_all_filters
 from segmentation import segment_image
 from classification import classify_image
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app) # Enable CORS for React frontend
@@ -20,6 +21,7 @@ app.config['SECRET_KEY'] = 'your-secret-key-change-in-production-2024'
 app.config['JWT_SECRET_KEY'] = 'jwt-secret-key-change-in-production-2024'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///diabetic_retinopathy.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 # Initialize extensions
 db.init_app(app)
